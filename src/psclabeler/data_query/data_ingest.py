@@ -51,4 +51,7 @@ def split_report_to_chunk(
         if deficiency:
             list_d[i] = f"{deficiency}"
 
+    if len(list_d) == 1:
+        logger.warning("There is no split in the report. Chunk size is 1")
+
     return list_d
