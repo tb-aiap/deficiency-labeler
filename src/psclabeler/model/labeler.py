@@ -24,6 +24,12 @@ class PSCInspector(ABC):
     def rate_risk(deficiency_query: str):
         pass
 
+    @property
+    def risk_guideline(self):
+        """Define risk guideline prompt for model."""
+        self._risk_guideline = psc.model.prompt.RISK_ASSESSMENT
+        return self._risk_guideline
+
 
 class ZeroShotLLMPSCInspector(PSCInspector):
     """PSC Inspector that uses LLM for zero shot prompting."""
@@ -48,12 +54,6 @@ class ZeroShotLLMPSCInspector(PSCInspector):
         """Define system prompt for model."""
         self._sys_prompt = psc.model.prompt.PSC_INSPECTOR
         return self._sys_prompt
-
-    @property
-    def risk_guideline(self):
-        """Define risk guideline prompt for model."""
-        self._risk_guideline = psc.model.prompt.RISK_ASSESSMENT
-        return self._risk_guideline
 
     def rate_risk(self, deficiency_query: str) -> BaseMessage:
         """Main method to rate risk for PSC report.
@@ -100,12 +100,6 @@ class FewShotLLMPSCInspector(PSCInspector):
         """Define system prompt for model."""
         self._example_prompt = psc.model.prompt.FEW_SHOT_EXAMPLES
         return self._example_prompt
-
-    @property
-    def risk_guideline(self):
-        """Define risk guideline prompt for model."""
-        self._risk_guideline = psc.model.prompt.RISK_ASSESSMENT
-        return self._risk_guideline
 
     @property
     def few_shot_prompt_suffix(self):
