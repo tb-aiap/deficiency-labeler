@@ -1,0 +1,2 @@
+labeler_dotpath: psclabeler.model.labeler.FewShotLLMPSCInspector
+# labeler_dotpath: psclabeler.model.labeler.ZeroShotLLMPSCInspector
