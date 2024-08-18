@@ -4,13 +4,10 @@ import logging
 import os
 from abc import ABC, abstractmethod
 
-import dotenv
 from langchain_core.messages.base import BaseMessage
 from langchain_openai import AzureChatOpenAI
 
 import psclabeler as psc
-
-dotenv.load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +28,12 @@ class ZeroShotLLMPSCInspector(PSCInspector):
 
     def __init__(self) -> None:
         """Initialize PSCInspector with LLM."""
+        if not os.getenv("AZURE_OPENAI_API_KEY"):
+            logger.error("No API key detected in environment variable.")
+            raise ValueError(
+                "No API key found. Please set your AZURE_OPENAI_API_KEY in the .env file."
+            )
+
         self.model = AzureChatOpenAI(
             api_key=os.getenv("AZURE_OPENAI_API_KEY"),
             api_version=os.getenv("AZURE_API_VERSION"),
