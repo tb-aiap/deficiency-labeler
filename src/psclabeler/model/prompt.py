@@ -38,6 +38,10 @@ ZERO_SHOT_PROMPT = PromptTemplate.from_template(
     Give your response in the following format:
     Deficiency: What is it.
 
+    Corrective Action: What is it.
+
+    Preventive Action: What is it.
+
     Reason: 
     Analyze the Deficiency Step by Step before classification.
     Does it expose a weakness in organization's processes?
@@ -60,6 +64,10 @@ PREFIX_PROMPT = PromptTemplate.from_template(
 
     Give your response in the following format:
     Deficiency: What is it.
+
+    Corrective Action: What is it.
+
+    Preventive Action: What is it.
 
     Reason: 
     Analyze the Deficiency Step by Step before classification.
@@ -84,6 +92,10 @@ FEW_SHOT_EXAMPLES = [
         Give your response in the following format:
         Deficiency: What is it.
 
+        Corrective Action: What is it.
+
+        Preventive Action: What is it.
+
         Reason: 
         Analyze the Deficiency Step by Step before classification.
         Does it expose a weakness in organization's processes?
@@ -94,6 +106,12 @@ FEW_SHOT_EXAMPLES = [
         """,
         "response": """
         deficiency: Fire extinguisher for rescue boat rusted seriously.
+
+        Corrective Action: Fire extinguisher replaced with a new extinguisher. The extinguisher is kept covered 
+        for protection against weather.
+
+        Preventive Action: Brieifing of entire ship staff carried out by Superintendent as to checks of rescue boat 
+        equipment. Lessons learned shared with all the vessels in Fleet.
 
         reason: This is a potential threat to human life and shipboard accident if a fire breaks down, and the extinguisher is not usable.
         Inapproriate storage of fire extinguisher is also a lapse in management procedure.
@@ -111,6 +129,10 @@ FEW_SHOT_EXAMPLES = [
         Give your response in the following format:
         Deficiency: What is it.
 
+        Corrective Action: What is it.
+
+        Preventive Action: What is it.
+
         Reason: 
         Analyze the Deficiency Step by Step before classification.
         Does it expose a weakness in organization's processes?
@@ -121,6 +143,10 @@ FEW_SHOT_EXAMPLES = [
         """,
         "response": """
         deficiency: The company name on the DOC is not the same as on the CSR. The interim SMC and interim Security certificate have different company names to the DOC.
+
+        Corrective Action: Master w/o fail to cross check all trading certificates and to report Office in case of discrepancy. Shore base also to support to see to it all certificate issued in accordance of the requirement.
+
+        Preventive Action: Education (Education and Training) Briefing of master carried out for checking and keeping up to date all trading certificates.
 
         reason: Improper certification is a weakness in the organization to maintain proper documentation. There is no immediate threath to human life or accident.
 
@@ -140,6 +166,10 @@ FEW_SHOT_EXAMPLES = [
         Give your response in the following format:
         Deficiency: What is it.
 
+        Corrective Action: What is it.
+
+        Preventive Action: What is it.
+
         Reason: 
         Analyze the Deficiency Step by Step before classification.
         Does it expose a weakness in organization's processes?
@@ -150,6 +180,12 @@ FEW_SHOT_EXAMPLES = [
         """,
         "response": """
         deficiency: Third mate was forgotten to record fire and abandon drill in Nav Logbook.
+
+        Corrective Action: 1. Add abandon and fire drill in Nav Logbook at major event column.
+        2. Training all crew regarding special requirement regarding drill record in Nav Logbook.
+
+        Preventive Action: 1. All drill record should be recorded in nav logbook after drill all complete.
+        2. Master should supervise whether duty officer was recording properly.
 
         reason: Third mate forgotten to record due to unfamiliarity of recording procedure. This is a lapse in adminstration but the drill is completed.
         There is no threat to human life or potential accident. 
