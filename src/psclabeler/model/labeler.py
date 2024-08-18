@@ -2,14 +2,12 @@
 
 import logging
 import os
-import sys
 from abc import ABC, abstractmethod
 
 import dotenv
 from langchain_core.messages.base import BaseMessage
 from langchain_openai import AzureChatOpenAI
 
-sys.path.append("src")
 import psclabeler as psc
 
 dotenv.load_dotenv()
