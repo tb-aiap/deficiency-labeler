@@ -3,6 +3,7 @@ modules in this package can be defined here."""
 
 import logging
 import logging.config
+from importlib import import_module
 
 import yaml
 
@@ -30,3 +31,34 @@ def setup_logging(
         )
         logger.error(error)
         logger.info("Logging config file is not found. Basic config is being used.")
+
+
+def load_func(dotpath: str):
+    """Load function in module. Function name is right-most segment.
+
+    Requires full library name.
+
+    Example:
+    A string value torch.nn.MSELoss
+    module_ = torch.nn
+    func_result = getattr(module, MSELoss)
+
+    A string value numpy.sum / Does not work with np.sum
+    module_ = numpy
+    func_result = getattr(module, sum)
+    """
+    module_, func = dotpath.rsplit(".", maxsplit=1)
+    try:
+        m = import_module(module_)
+        func_result = getattr(m, func)
+    except AttributeError as e:
+        logger.error(
+            "Check spelling in config '{}' for Function - {}".format(dotpath, e)
+        )
+        raise AttributeError(e)
+    except ModuleNotFoundError as e:
+        logger.error("Check spelling in config '{}' for Module - {}".format(dotpath, e))
+        raise ModuleNotFoundError(e)
+
+    logger.debug("load_func returns result = {}".format(func_result))
+    return func_result
