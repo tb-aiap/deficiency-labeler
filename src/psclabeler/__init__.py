@@ -1,5 +1,5 @@
 """Init file for psclabeler"""
 
-from . import utils
+from . import data_query, utils
 
-__all__ = ["utils"]
+__all__ = ["utils", "data_query"]
