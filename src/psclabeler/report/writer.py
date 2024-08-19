@@ -59,7 +59,7 @@ class ExcelReportWriter(ReportWriter):
         self.report_df = None
         self.metadata_df = None
 
-        self._split_str_token = params["split_text_token"]
+        self._split_str_token = params.get("split_text_token", "\n\n")
         self._content_array = None
         self._token_use_array = None
 
