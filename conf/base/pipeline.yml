@@ -1,2 +1,13 @@
 labeler_dotpath: psclabeler.model.labeler.FewShotLLMPSCInspector
 # labeler_dotpath: psclabeler.model.labeler.ZeroShotLLMPSCInspector
+
+
+writer:
+  output_folder: "./data"
+  expected_df_columns:
+    - classification
+    - deficiency
+    - corrective action
+    - preventive action
+    - reason
+  split_text_token: "\n\n"
