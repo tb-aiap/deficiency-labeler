@@ -4,14 +4,43 @@ import logging
 import os
 from abc import ABC, abstractmethod
 
+import omegaconf
 from langchain_core.messages.base import BaseMessage
 from langchain_core.prompts import PromptTemplate
 from langchain_core.prompts.few_shot import FewShotPromptTemplate
 from langchain_openai import AzureChatOpenAI
+from langchain_openai.chat_models.base import BaseChatOpenAI
 
 import psclabeler as psc
 
 logger = logging.getLogger(__name__)
+
+
+def azure_chat_model(params: omegaconf.DictConfig) -> BaseChatOpenAI:
+    """Creates AzureChatOpenAI Chatmodel with params as kwargs into ChatModel.
+
+    Args:
+        params (omegaconf.DictConfig): Params such as temperature.
+
+    Raises:
+        ValueError: If no API_KEY is found in environment variables.
+
+    Returns:
+        BaseChatModel: ChatModel
+    """
+    if not os.getenv("AZURE_OPENAI_API_KEY"):
+        logger.error("No API key detected in environment variable.")
+        raise ValueError(
+            "No API key found. Please set your AZURE_OPENAI_API_KEY in the .env file."
+        )
+
+    return AzureChatOpenAI(
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        api_version=os.getenv("AZURE_API_VERSION"),
+        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        deployment_name=os.getenv("AZURE_MODEL"),
+        **params
+    )
 
 
 class PSCInspector(ABC):
@@ -34,20 +63,9 @@ class PSCInspector(ABC):
 class ZeroShotLLMPSCInspector(PSCInspector):
     """PSC Inspector that uses LLM for zero shot prompting."""
 
-    def __init__(self) -> None:
+    def __init__(self, chat_model: BaseChatOpenAI) -> None:
         """Initialize PSCInspector with LLM."""
-        if not os.getenv("AZURE_OPENAI_API_KEY"):
-            logger.error("No API key detected in environment variable.")
-            raise ValueError(
-                "No API key found. Please set your AZURE_OPENAI_API_KEY in the .env file."
-            )
-
-        self.model = AzureChatOpenAI(
-            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-            api_version=os.getenv("AZURE_API_VERSION"),
-            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-            deployment_name=os.getenv("AZURE_MODEL"),
-        )
+        self.model = chat_model
 
     @property
     def sys_prompt(self):
@@ -79,21 +97,9 @@ class ZeroShotLLMPSCInspector(PSCInspector):
 class FewShotLLMPSCInspector(PSCInspector):
     """PSC Inspector that uses LLM with few shot prompting."""
 
-    def __init__(self) -> None:
+    def __init__(self, chat_model: BaseChatOpenAI) -> None:
         """Initialize PSCInspector with LLM."""
-        if not os.getenv("AZURE_OPENAI_API_KEY"):
-            logger.error("No API key detected in environment variable.")
-            raise ValueError(
-                "No API key found. Please set your AZURE_OPENAI_API_KEY in the .env file."
-            )
-
-        self.model = AzureChatOpenAI(
-            api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-            api_version=os.getenv("AZURE_API_VERSION"),
-            azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-            deployment_name=os.getenv("AZURE_MODEL"),
-            temperature=0,
-        )
+        self.model = chat_model
 
     @property
     def few_shot_example_prompt(self):
