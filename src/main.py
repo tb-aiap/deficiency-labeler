@@ -7,6 +7,7 @@ from typing import Any, Callable, TypeAlias
 
 import omegaconf
 from dotenv import load_dotenv
+from langchain_openai.chat_models.base import BaseChatOpenAI
 
 import psclabeler as psc
 
@@ -21,6 +22,9 @@ report_writer: TypeAlias = psc.report.writer.ReportWriter
 
 # func alias
 load_object: Callable[[str], Any] = psc.utils.load_class_object
+load_chat: Callable[[omegaconf.DictConfig], BaseChatOpenAI] = (
+    psc.model.labeler.azure_chat_model
+)
 
 
 def main(conf: omegaconf.DictConfig) -> None:
@@ -58,7 +62,9 @@ def main(conf: omegaconf.DictConfig) -> None:
     report_dict = parser.parse_report()
 
     logger.info("Starting rate_risk on deficiencies.")
-    model: psc_inspector = load_object(conf["labeler_dotpath"])()
+    model: psc_inspector = load_object(conf["labeler_dotpath"])(
+        load_chat(conf["chat_model"])
+    )
     results = [model.rate_risk(v) for v in report_dict.values()]
 
     logger.info("Saving report")
