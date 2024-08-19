@@ -1,6 +1,9 @@
+parser_dotpath: psclabeler.data_query.data_ingest.SampleReportParser
+
 labeler_dotpath: psclabeler.model.labeler.FewShotLLMPSCInspector
 # labeler_dotpath: psclabeler.model.labeler.ZeroShotLLMPSCInspector
 
+writer_dotpath: psclabeler.report.writer.ExcelReportWriter
 
 writer:
   output_folder: "./data"
