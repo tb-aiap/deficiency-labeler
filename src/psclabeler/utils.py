@@ -4,6 +4,7 @@ modules in this package can be defined here."""
 import logging
 import logging.config
 from importlib import import_module
+from typing import Any
 
 import yaml
 
@@ -62,3 +63,25 @@ def load_func(dotpath: str):
 
     logger.debug("load_func returns result = {}".format(func_result))
     return func_result
+
+
+def load_class_object(object_dotpath: str) -> Any:
+    """Use string `object_dotpath` to create uninstantiated class object.
+
+    Args:
+        object_dotpath (str): dotpath to object.
+
+    Example use:
+    model = load_class_object()("init params goes here")
+    model = load_class_object("psclabeler.model.labeler.LLMPSCInspector")(temperature=0)
+
+    Returns:
+        Any: A class that is uninstantiated.
+    """
+    try:
+        class_object = load_func(object_dotpath)
+        logger.info(f"Loading Uninstantiated Object: {class_object}")
+        return class_object
+    except Exception as e:
+        logger.error(f"Error loading model: {e}")
+        raise
