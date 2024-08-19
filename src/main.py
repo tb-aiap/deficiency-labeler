@@ -24,6 +24,19 @@ load_object: Callable[[str], Any] = psc.utils.load_class_object
 
 
 def main(conf: omegaconf.DictConfig) -> None:
+    """Main function for unlabeled inspection pdf and outputs a labeled report.
+
+    Main workflow of the pipeline.
+        ReportParser: reads the pdf and output a dict[int, str] for each deficiency.
+        PSCInspector: uses the dict[int, str] to loop through each deficiency.
+        ReportWriter: takes the output from PSCInspector and writes/save the content.
+
+    Args:
+        conf (omegaconf.DictConfig): yaml config to set class objects and params.
+
+    Raises:
+        FileNotFoundError: If the file path is wrong.
+    """
     logger.info("Starting Pipeline to rate deficiency report.")
 
     load_dotenv()
