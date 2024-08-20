@@ -37,7 +37,15 @@ $ python src/main.py path/to/sample_inspection_report.pdf
 ```
 
 ## Main Modules of Pipeline
-
+```mermaid
+flowchart TD
+   subgraph main.py
+   direction TB
+      A[Report Parser:\nIngest pdf file.] --> B[PSCInspector:\nUses various LLMs as dependency to label risk.\nMethods can include Prompting, RAG, or NLPClassifier.] 
+      B --> C[ReportWriter:\nConfigures appropriate file output.] 
+   end
+P[(PDF File)] --> main.py --> Z[(Labeled Report)]
+```
 ## Folder Structure
 
 ```
