@@ -1,5 +1,11 @@
 # deficiency-labeler
-Label PSC Deficiency with a Risk Label (High, Medium, Low)
+This repository aims to label any PSC Deficiency Report(pdf) with a Risk Label (High, Medium, Low). 
+
+It ingest the pdf_report, parse individual deficiencies into string format. 
+
+Then a Large Language Model rates the risk through selected method. Current selected method is Fewshot Prompting with Chain-Of-Thoughts Prompting.
+
+Finally, the output is being saved by in required file format. Current defaults to Excel.
 
 
 ## 1. Environment Setup And Usage
@@ -37,6 +43,20 @@ $ python src/main.py path/to/sample_inspection_report.pdf
 ```
 
 ## 2. Main Modules of Pipeline
+
+Below shows the flow of the pipeline with the following BaseClass.
+
+- **ReportParser**: reads in a `pdf_file_path` and outputs `dict[int,str]` for model input. Defaults to `SampleReportParser`.
+- **PSCInspector**: takes in output from ReportParser and iterates `rate_risk` through each deficiency. Defaults to `FewShotLLMPSCInspector`.
+  - To use `ZeroShotLLMPSCInspector`, please configure the `yml` config with instruction from 2.1
+  - To use other prompting/ rag or classification method, please create a custom `PSCInspector` that requires to inherit required abstractmethod.
+    - Example, to implement RAG LLM, LLM should read from a vector_store or process vector_embedding in this class before constructing a prompt for rate_risk.
+  - Currently `rate_risk` is aim to rate 1 deficiency.
+- **ReportWriter**: takes the output from PSCInspector and writes out the classification and details for each deficiency. Defaults to `ExcelReportWriter`.
+  - To write to another report type, please create custom `ReportWriter` and let `save_report()` method.
+  - Output folder of the report is defined in pipeline.yml.
+  - the sample report output is `.\data\labeled_report-1724075886.xlsx`
+
 ```mermaid
 flowchart TD
    subgraph main.py
