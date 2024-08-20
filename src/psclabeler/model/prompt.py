@@ -116,7 +116,7 @@ FEW_SHOT_EXAMPLES = [
         reason: This is a potential threat to human life and shipboard accident if a fire breaks down, and the extinguisher is not usable.
         Inapproriate storage of fire extinguisher is also a lapse in management procedure.
 
-        clssification: High Risk.
+        classification: High Risk.
 """,
     },
     {
@@ -150,7 +150,7 @@ FEW_SHOT_EXAMPLES = [
 
         reason: Improper certification is a weakness in the organization to maintain proper documentation. There is no immediate threath to human life or accident.
 
-        clssification: Medium Risk.
+        classification: Medium Risk.
 """,
     },
     {
@@ -190,7 +190,7 @@ FEW_SHOT_EXAMPLES = [
         reason: Third mate forgotten to record due to unfamiliarity of recording procedure. This is a lapse in adminstration but the drill is completed.
         There is no threat to human life or potential accident. 
 
-        clssification: Low Risk.
+        classification: Low Risk.
 """,
     },
 ]
@@ -200,4 +200,19 @@ Analyse the deficiency and root cause below step by step
 And classify the deficiency accordingly to the risk level, High, Medium Low.
 
 Deficiency: {input}
+
+Give your response in the following format:
+Deficiency: What is it.
+
+Corrective Action: What is it.
+
+Preventive Action: What is it.
+
+Reason: 
+Analyze the Deficiency Step by Step before classification.
+Does it expose a weakness in organization's processes?
+Is it significant and potential threat to human life and cause accident or fire?
+
+
+Classification: Only reply one word. Do not explain further
 """
