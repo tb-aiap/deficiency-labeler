@@ -102,5 +102,13 @@ model = FewShotLLMPSCInspector(params)
 │   └───main.py          <- main.py for labeling reports.
 └───requirements.txt     <- `conda` environment file for reproducing the project.
 ```
+## 4. Potential Follow-up / Improvement
 
+- Explore structured output for more stable data pipeline. [Link](https://python.langchain.com/v0.1/docs/modules/model_io/chat/structured_output/)
+- Explore some interesting library that helps to parse pdf into markdown.
+  - This library [marker-pdf](https://github.com/VikParuchuri/marker) uses OCR and also Deep Learning models to parse PDF into high quality markdown files.
+  - This allows for better extraction of PDFs.
+- Explore adding RAG or NLP classifier based PSCInspector.
+- Explore experimentations with [MLFlow Prompt Engineering](https://mlflow.org/docs/latest/llms/prompt-engineering/index.html)
+  - Allow for better tracking of prompt results and changes made. 
 
