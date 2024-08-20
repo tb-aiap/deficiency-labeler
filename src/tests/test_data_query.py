@@ -28,14 +28,16 @@ def report_chunk():
 
 def test_split_report_to_chunk_default(report_chunk):
     """Test default regex split the chunk as expected."""
-    report_dict = psc.data_query.data_ingest.split_report_to_chunk(report_chunk)
+    report_dict = psc.data_query.data_ingest.SampleReportParser.split_report_to_chunk(
+        report_chunk
+    )
 
     assert len(report_dict) == 3
 
 
 def test_split_report_to_chunk_custom(report_chunk):
     """Test that a custom regex split the chunk as expected"""
-    report_dict = psc.data_query.data_ingest.split_report_to_chunk(
+    report_dict = psc.data_query.data_ingest.SampleReportParser.split_report_to_chunk(
         report_chunk,
         split_regx=r"Alarms/Emergency Signal",
     )
@@ -44,7 +46,7 @@ def test_split_report_to_chunk_custom(report_chunk):
 
 def test_split_report_to_chunk_no_split(report_chunk):
     """Test that regex with no match should not result in any split."""
-    report_dict = psc.data_query.data_ingest.split_report_to_chunk(
+    report_dict = psc.data_query.data_ingest.SampleReportParser.split_report_to_chunk(
         report_chunk,
         split_regx=r"zzzzzzzzzzzzzzzzzzzzzz",
     )
