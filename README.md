@@ -39,6 +39,7 @@ AZURE_API_VERSION
 2. Run the following command
 
 ```bash
+$ conda activate psc-label
 $ python src/main.py path/to/sample_inspection_report.pdf
 ```
 
