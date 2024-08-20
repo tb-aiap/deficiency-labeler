@@ -40,7 +40,7 @@ $ python src/main.py path/to/sample_inspection_report.pdf
 
 ## Folder Structure
 
-```bash
+```
 ├───conf                 <- config files.
 │   └───base
 ├───notebooks            <- notebook for exploration.
