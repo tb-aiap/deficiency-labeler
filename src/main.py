@@ -58,8 +58,8 @@ def main(conf: omegaconf.DictConfig) -> None:
         raise FileNotFoundError(f"{pdf_path.as_posix()} is not a valid file path")
 
     logger.info("Parsing report from {}.".format(pdf_path))
-    parser: report_parser = load_object(conf["parser_dotpath"])(pdf_path)
-    report_dict = parser.parse_report()
+    report_parser_obj: report_parser = load_object(conf["parser_dotpath"])(pdf_path)
+    report_dict = report_parser_obj.parse_report()
 
     logger.info("Starting rate_risk on deficiencies.")
     model: psc_inspector = load_object(conf["labeler_dotpath"])(
