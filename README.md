@@ -2,7 +2,7 @@
 Label PSC Deficiency with a Risk Label (High, Medium, Low)
 
 
-## Environment Setup And Usage
+## 1. Environment Setup And Usage
 
 This repo uses Conda to manage python version and virtual environment.
 ```bash
@@ -21,7 +21,7 @@ $ cd deficiency-labeler
 $ conda env create --file=requirements.yml
 ```
 
-### To run the module.
+### 1.1 - To run the module.
 1. Ensure relavant AZURE_OPEN_API variables is in a `.env` file inside `deficiency-labeler` folder. Refer to the link for more [details.](https://python.langchain.com/v0.2/docs/integrations/chat/azure_chat_openai/)
 ```python
 # required environment variable in .env file
@@ -36,7 +36,7 @@ AZURE_API_VERSION
 $ python src/main.py path/to/sample_inspection_report.pdf
 ```
 
-## Main Modules of Pipeline
+## 2. Main Modules of Pipeline
 ```mermaid
 flowchart TD
    subgraph main.py
@@ -46,7 +46,27 @@ flowchart TD
    end
 P[(PDF File)] --> main.py --> Z[(Labeled Report)]
 ```
-## Folder Structure
+
+### 2.1 - How to adjust the pipeline via config file
+
+Most of the modules in the pipeline are adjustable via yaml config in `conf/base/pipeline.yml` via the `*_dotpath` suffix. 
+
+The `_dotpath` as a string is being instantiated as an object of that class. Notice the `()` at the end of each example for instantiation of the object.
+
+```python
+# for example
+"psclabeler.model.labeler.FewShotLLMPSCInspector"
+
+# after passing into utils.load_class_object
+model = utils.load_class_object("psclabeler.model.labeler.FewShotLLMPSCInspector")(params)
+# is equvialent to 
+from psclabeler.model.labeler import FewShotLLMPSCInspector
+
+model = FewShotLLMPSCInspector(params)
+
+```
+
+## 3. Folder Structure
 
 ```
 ├───conf                 <- config files.
@@ -62,4 +82,4 @@ P[(PDF File)] --> main.py --> Z[(Labeled Report)]
 └───requirements.txt     <- `conda` environment file for reproducing the project.
 ```
 
-## How to adjust the config
+
